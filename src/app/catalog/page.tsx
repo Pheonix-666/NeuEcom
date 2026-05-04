@@ -106,6 +106,38 @@ export default function Catalog() {
             </div>
           </main>
         </div>
+
+        {/* Featured Boutique Selection (Inspired by Pic) */}
+        <section className="py-20 border-t border-neutral-100">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
+                <div className="relative aspect-[4/5] md:aspect-square bg-white p-6 md:p-12 overflow-hidden group shadow-sm">
+                    <img 
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ-e6nc0ploS672H0DW4pwkHtfQVrXFI5EcKoaTowa1sX3QsN-nc2qu5rRlu9DYtg7rI0HkExOy7dcEnE8KwpMIrR9JV2WW819nZLpBcWP-viujyMzLOjdojIBGXohrv-Ds-ZSy_ssHWKuPNNilzDvodwNdxcejbT6QlKGfir4AY6UjWM-pLDfW2eCmOJMAZLN7zMvmjV3mEh0Ngk4tY89DLkOQV9XoJMqGhKf2FQtKKJS2oOhX_mIWVIjK5OPIFRZ6Qcgq_TptoJT" 
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                        alt="Featured Artwork"
+                    />
+                </div>
+                <div className="space-y-8">
+                    <div>
+                        <span className="font-label-caps text-[12px] tracking-[0.3em] text-secondary uppercase mb-4 block">Curator's Choice</span>
+                        <h2 className="font-display-lg text-[36px] md:text-[54px] text-primary leading-tight">Gold Boho<br/>Artifact</h2>
+                        <p className="font-headline-sm text-[20px] md:text-[24px] text-on-surface-variant mt-2">$640.00</p>
+                    </div>
+                    <div className="space-y-6 text-on-surface-variant max-w-md">
+                        <p className="font-body-md">This piece features a hand-gilded 24k gold leaf finish over sustainably sourced black walnut. A true centerpiece for the modern atelier.</p>
+                        <ul className="space-y-2 font-label-caps text-[10px] tracking-widest">
+                            <li className="flex items-center gap-2"><span className="w-1 h-1 bg-secondary rounded-full"/> LIMITED EDITION</li>
+                            <li className="flex items-center gap-2"><span className="w-1 h-1 bg-secondary rounded-full"/> MUSEUM GRADE ACRYLIC</li>
+                            <li className="flex items-center gap-2"><span className="w-1 h-1 bg-secondary rounded-full"/> SIGNED BY ARTISAN</li>
+                        </ul>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button className="flex-1 bg-primary text-white py-4 font-label-caps text-[11px] tracking-widest uppercase hover:bg-secondary transition-all">Add to Cart</button>
+                        <button className="flex-1 border border-primary text-primary py-4 font-label-caps text-[11px] tracking-widest uppercase hover:bg-surface-variant transition-all">Quick View</button>
+                    </div>
+                </div>
+            </div>
+        </section>
       </div>
 
       {/* Boutique Newsletter Section (Inspired by Pic) */}

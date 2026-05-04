@@ -23,41 +23,44 @@ export default function Navbar() {
   return (
     <>
       {/* Main Navbar */}
-      <nav className="fixed top-0 w-full z-[100] bg-white/40 backdrop-blur-xl border-b border-white/20 h-20 md:h-24">
+      <nav className="fixed top-0 w-full z-[140] bg-white/40 backdrop-blur-xl border-b border-white/20 h-20 md:h-24">
         <div className="flex justify-between items-center h-full w-full px-6 md:px-12 max-w-[1920px] mx-auto text-neutral-900 font-['Noto_Serif'] tracking-tight">
-          <Link href="/" className="flex flex-col group relative z-[110]">
+          <Link href="/" className="flex flex-col group relative z-[150]">
             <span className="text-[15px] md:text-[18px] font-bold uppercase tracking-[0.2em] text-neutral-900 leading-none">Good Luck</span>
             <span className="text-[10px] md:text-[11px] font-label-caps uppercase tracking-[0.3em] text-neutral-500 mt-1">Frame and Art</span>
           </Link>
           
-          {/* Desktop Links */}
-          <div className="hidden lg:flex items-center space-x-10">
-            {pathname !== '/' && (
-              <Link href="/" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Gallery</Link>
-            )}
-            <Link href="/catalog" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Catalog</Link>
-            <Link href="/bespoke" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Bespoke</Link>
-            <Link href="/services" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Services</Link>
-            <Link href="/atelier" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Atelier</Link>
-          </div>
+          <div className="flex items-center space-x-3 md:space-x-8 relative z-[150]">
+            {/* Desktop Links */}
+            <div className="hidden lg:flex items-center space-x-10 mr-10">
+              {pathname !== '/' && (
+                <Link href="/" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Gallery</Link>
+              )}
+              <Link href="/catalog" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Catalog</Link>
+              <Link href="/bespoke" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Bespoke</Link>
+              <Link href="/services" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Services</Link>
+              <Link href="/atelier" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Atelier</Link>
+            </div>
 
-          <div className="flex items-center space-x-4 md:space-x-6 relative z-[110]">
-            <button className="hover:opacity-70 transition-opacity duration-300">
-              <span className="material-symbols-outlined text-[22px]">shopping_cart</span>
-            </button>
-            <button className="hidden sm:block hover:opacity-70 transition-opacity duration-300">
-              <span className="material-symbols-outlined text-[22px]">person</span>
+            <button className="hover:opacity-70 transition-opacity duration-300 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+                <rect x="0.5" y="0.5" width="23" height="23" stroke="currentColor" strokeWidth="1"/>
+                <text x="50%" y="65%" textAnchor="middle" fontSize="10" fontWeight="bold" fill="currentColor" fontFamily="Noto Serif">GL</text>
+              </svg>
             </button>
             
-            {/* Mobile Menu Toggle */}
+            <button className="hidden sm:block hover:opacity-70 transition-opacity duration-300">
+              <span className="material-symbols-outlined text-[20px] md:text-[22px]">person</span>
+            </button>
+            
             <button 
-              className="lg:hidden p-2 -mr-2 hover:opacity-70 transition-opacity flex items-center justify-center"
+              className="lg:hidden p-2 -mr-2 relative z-[160] flex flex-col justify-center items-center gap-1.5 w-10 h-10"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle Menu"
             >
-              <span className="material-symbols-outlined text-[30px] font-light transition-all duration-300">
-                {isMenuOpen ? 'close' : 'menu'}
-              </span>
+              <div className={`w-6 h-0.5 bg-primary transition-all duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <div className={`w-6 h-0.5 bg-primary transition-all duration-300 ${isMenuOpen ? 'opacity-0' : ''}`} />
+              <div className={`w-6 h-0.5 bg-primary transition-all duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
           </div>
         </div>
@@ -68,11 +71,11 @@ export default function Navbar() {
         className={`fixed inset-0 z-[120] transition-opacity duration-500 lg:hidden ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => setIsMenuOpen(false)}
       >
-        <div className="absolute inset-0 bg-neutral-900/40 backdrop-blur-sm" />
+        <div className="absolute inset-0 bg-neutral-900/20 backdrop-blur-sm" />
       </div>
 
       <aside className={`
-        fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white z-[130] shadow-2xl transition-transform duration-500 ease-out lg:hidden
+        fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-white/70 backdrop-blur-2xl z-[130] shadow-2xl transition-transform duration-500 ease-out lg:hidden
         ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
       `}>
         <div className="flex flex-col h-full p-8 pt-24">
@@ -108,35 +111,6 @@ export default function Navbar() {
         </div>
       </aside>
 
-      {/* Bottom Navigation (Mobile Only) */}
-      <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white/40 backdrop-blur-xl border-t border-white/20 z-[90] h-20 px-6 pb-2">
-        <div className="flex justify-between items-center h-full max-w-[500px] mx-auto">
-          {pathname !== '/' && (
-            <Link href="/" className="flex flex-col items-center gap-1 group animate-fade-in">
-              <span className="material-symbols-outlined text-[24px] text-neutral-400 group-hover:text-primary transition-colors">home</span>
-              <span className="text-[9px] font-label-caps uppercase tracking-wider text-neutral-400 group-hover:text-primary">Home</span>
-            </Link>
-          )}
-          <Link href="/catalog" className="flex flex-col items-center gap-1 group">
-            <span className="material-symbols-outlined text-[24px] text-neutral-400 group-hover:text-primary transition-colors">grid_view</span>
-            <span className="text-[9px] font-label-caps uppercase tracking-wider text-neutral-400 group-hover:text-primary">Catalog</span>
-          </Link>
-          <Link href="#" className="flex flex-col items-center gap-1 group">
-             <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center -mt-8 shadow-xl border-4 border-white">
-               <span className="material-symbols-outlined text-[24px] text-white">search</span>
-             </div>
-             <span className="text-[9px] font-label-caps uppercase tracking-wider text-neutral-400 group-hover:text-primary mt-1">Search</span>
-          </Link>
-          <Link href="#" className="flex flex-col items-center gap-1 group">
-            <span className="material-symbols-outlined text-[24px] text-neutral-400 group-hover:text-primary transition-colors">auto_awesome</span>
-            <span className="text-[9px] font-label-caps uppercase tracking-wider text-neutral-400 group-hover:text-primary">Custom</span>
-          </Link>
-          <Link href="#" className="flex flex-col items-center gap-1 group">
-            <span className="material-symbols-outlined text-[24px] text-neutral-400 group-hover:text-primary transition-colors">person</span>
-            <span className="text-[9px] font-label-caps uppercase tracking-wider text-neutral-400 group-hover:text-primary">Profile</span>
-          </Link>
-        </div>
-      </div>
     </>
   );
 }
