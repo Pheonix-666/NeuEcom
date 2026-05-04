@@ -4,25 +4,31 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <header className="relative min-h-[calc(100vh-6rem)] flex items-center overflow-hidden">
+      <header className="relative min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-surface-container-lowest">
         <div className="absolute inset-0 z-0">
           <img 
-            className="w-full h-full object-cover grayscale-[20%] opacity-90" 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDB0AfIaRMFPB9Mq8A1oOz2LisCvgNE03FvGc8cONqn27pBlKBWkDllgJ-U8lEvBNWiNN_KZs1XPVzA7G7c0u51m2tD9mhXlmmJA7Wrd0w6LzVm-_dmcwNmHfjDD66ZG_mPspeEfzt4EQZToDlIyPAl6Hr7nvF8tyu56m3v1r1hCLaImY1EjDBMLX_6woKRnpeRI52m_zTLVyts1veCe-1nZbga7AOI0iega3p5QsQWyBvcgfpJcZIoNIAVg8BHuyyFmgofTCLL5ZK"
+            className="w-full h-full object-cover grayscale-[10%] opacity-95 transition-transform duration-[10000ms] hover:scale-105" 
+            src="/hero_lux.png"
             alt="Hero Image"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-background/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent"></div>
         </div>
-        <div className="relative z-10 max-w-[1440px] mx-auto px-12 w-full">
-          <div className="max-w-2xl bg-white/40 backdrop-blur-md p-16 border border-white/20">
-            <span className="font-label-caps text-[12px] uppercase text-secondary mb-6 block tracking-widest">The Atelier Standard</span>
-            <h1 className="font-display-lg text-[48px] mb-8 text-primary leading-[1.1] tracking-[-0.02em]">The Art of the Frame</h1>
-            <p className="font-body-lg text-[18px] text-on-surface-variant mb-12 max-w-lg leading-[1.6]">
+        <div className="relative z-10 max-w-[1440px] mx-auto px-12 w-full animate-fade-in-up">
+          <div className="max-w-2xl bg-white/60 backdrop-blur-xl p-16 border border-white/40 shadow-2xl rounded-sm">
+            <span className="font-label-caps text-[12px] uppercase text-secondary mb-6 block tracking-[0.25em]">The Atelier Standard</span>
+            <h1 className="font-display-lg text-[56px] mb-8 text-primary leading-[1.05] tracking-[-0.03em]">The Art of the Frame</h1>
+            <p className="font-body-lg text-[20px] text-on-surface-variant mb-12 max-w-lg leading-[1.6]">
               Discover artisanal preservation and bespoke craftsmanship designed to elevate your collection. We believe the frame is the final brushstroke.
             </p>
-            <Link href="/catalog" className="inline-block px-10 py-4 bg-primary text-on-primary font-label-caps text-[12px] tracking-widest uppercase border border-primary hover:bg-transparent hover:text-primary transition-all duration-300">
-              Explore Collections
-            </Link>
+            <div className="flex gap-4">
+                <Link href="/catalog" className="inline-flex items-center justify-center px-10 py-5 bg-primary text-on-primary font-label-caps text-[12px] tracking-widest uppercase hover:bg-primary-container hover:text-white transition-all duration-300">
+                Explore Collections
+                </Link>
+                <Link href="#" className="inline-flex items-center justify-center px-10 py-5 border border-primary text-primary font-label-caps text-[12px] tracking-widest uppercase hover:bg-surface-variant transition-all duration-300">
+                Our Story
+                </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -163,6 +169,36 @@ export default function Home() {
             <h5 className="font-headline-sm text-lg mb-1">Golden Hour</h5>
             <p className="font-body-md text-xs text-on-surface-variant mb-4">Mixed Media / Gilded Wood</p>
             <span className="font-label-caps text-[12px] tracking-widest">$980.00</span>
+          </Link>
+
+          {/* Card 4 */}
+          <Link href="/product/4" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
+            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
+              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="/vintage_gold.png" alt="Vintage Gold Botanical" />
+            </div>
+            <h5 className="font-headline-sm text-lg mb-1">Vintage Gold Botanical</h5>
+            <p className="font-body-md text-xs text-on-surface-variant mb-4">Original Print / Ornate Gold</p>
+            <span className="font-label-caps text-[12px] tracking-widest">$450.00</span>
+          </Link>
+
+          {/* Card 5 */}
+          <Link href="/product/5" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
+            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
+              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="/modern_black.png" alt="Modern Architecture" />
+            </div>
+            <h5 className="font-headline-sm text-lg mb-1">Modern Architecture</h5>
+            <p className="font-body-md text-xs text-on-surface-variant mb-4">B&W Photography / Matte Metal</p>
+            <span className="font-label-caps text-[12px] tracking-widest">$210.00</span>
+          </Link>
+
+          {/* Card 6 */}
+          <Link href="/product/6" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
+            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
+              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="/rustic_barnwood.png" alt="Serene Landscape" />
+            </div>
+            <h5 className="font-headline-sm text-lg mb-1">Serene Landscape</h5>
+            <p className="font-body-md text-xs text-on-surface-variant mb-4">Watercolor / Reclaimed Wood</p>
+            <span className="font-label-caps text-[12px] tracking-widest">$320.00</span>
           </Link>
         </div>
       </section>
