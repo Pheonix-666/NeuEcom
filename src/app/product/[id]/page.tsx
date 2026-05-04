@@ -4,10 +4,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   return (
     <div className="pt-8">
       {/* Hero Product Gallery */}
-      <section className="max-w-[1440px] mx-auto px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-[120px]">
+      <section className="max-w-[1440px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start mb-16 md:mb-[120px]">
         {/* Gallery Column */}
-        <div className="lg:col-span-7 space-y-6">
-          <div className="aspect-[1.33] w-full bg-white p-8 ghost-border relative overflow-hidden group">
+        <div className="lg:col-span-7 space-y-4 md:space-y-6">
+          <div className="aspect-[1.33] w-full bg-white p-4 md:p-8 ghost-border relative overflow-hidden group">
             <img 
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR6FQejqy1jmmpYxc39n54spuBfWGgWN-htVcsC3WBnAHjetDGavVXXHHdd5cafzJcx69ovmY4AVYB3m4Pr67hXG6akGGREOO5bhJv4nngdwCsQwBdyQ1ShcPdDXxmB8XThhu9dLXkk35Wct2Kst6qw35gvKN-n1MRVFqGfxKXTA-BGDlxxYcRPcf4qzVqv65Sme8_r6OfqPrh6A3pLXCVp4di6eRjvjmTaxl1DrQYV2VPZ7b7AzEdgFglAq-2WWVRv6SrlYx1_Q5T" 
                 alt="The Heritage Walnut Frame" 
@@ -36,11 +36,11 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* Purchase Area Column */}
-        <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-10">
+        <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-8 md:space-y-10">
           <div>
-            <span className="font-label-caps text-[12px] tracking-widest text-secondary mb-2 block uppercase">EXCLUSIVELY HANDCRAFTED</span>
-            <h1 className="font-display-lg text-[48px] text-primary mb-4 leading-tight">The Heritage Walnut Frame</h1>
-            <p className="font-headline-sm text-[24px] text-on-surface-variant">$240.00 — $680.00</p>
+            <span className="font-label-caps text-[10px] md:text-[12px] tracking-widest text-secondary mb-2 block uppercase">EXCLUSIVELY HANDCRAFTED</span>
+            <h1 className="font-display-lg text-[32px] md:text-[48px] text-primary mb-4 leading-tight">The Heritage Walnut Frame</h1>
+            <p className="font-headline-sm text-[20px] md:text-[24px] text-on-surface-variant">$240.00 — $680.00</p>
           </div>
 
           <div className="space-y-8">
@@ -97,10 +97,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       </section>
 
       {/* The Story Section */}
-      <section className="bg-surface-container-low py-[120px] overflow-hidden">
-        <div className="max-w-[1440px] mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+      <section className="bg-surface-container-low py-16 md:py-[120px] overflow-hidden">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
           <div className="space-y-8">
-            <h2 className="font-display-lg text-[48px] max-w-md">Provenance and Craftsmanship</h2>
+            <h2 className="font-display-lg text-[32px] md:text-[48px] max-w-md leading-tight">Provenance and Craftsmanship</h2>
             <div className="space-y-6 text-on-surface-variant max-w-lg leading-relaxed">
               <p className="font-body-lg text-[18px]">Every Heritage Walnut Frame begins its journey in the sustainable forests of the American Midwest. We select only the heartwood of trees that have reached full maturity, ensuring a density and grain complexity that is unparalleled in commercial framing.</p>
               <p className="font-body-lg text-[18px]">Master artisan Elias Thorne hand-finishes each piece in our Vermont atelier. Using a proprietary blend of natural oils and waxes, he builds the finish layer by layer over seven days. The result is a deep, luminous glow that protects the wood while allowing its natural soul to breathe.</p>
@@ -123,10 +123,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
       </section>
 
       {/* Specifications & Pairings */}
-      <section className="max-w-[1440px] mx-auto px-12 py-[120px] grid grid-cols-1 lg:grid-cols-12 gap-24">
+      <section className="max-w-[1440px] mx-auto px-6 md:px-12 py-16 md:py-[120px] grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
         {/* Accordion Section */}
         <div className="lg:col-span-6 space-y-6">
-          <h3 className="font-headline-md text-[32px] mb-8">Technical Details</h3>
+          <h3 className="font-headline-md text-[28px] md:text-[32px] mb-8">Technical Details</h3>
           
           <div className="border-b border-outline-variant py-6">
             <div className="w-full flex justify-between items-center text-left group cursor-pointer">
@@ -161,8 +161,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
         {/* Curated Pairings Section */}
         <div className="lg:col-span-6">
-          <div className="bg-surface-container p-12 ghost-border">
-            <h3 className="font-headline-md text-[32px] mb-8">Curated Pairings</h3>
+          <div className="bg-surface-container p-8 md:p-12 ghost-border">
+            <h3 className="font-headline-md text-[28px] md:text-[32px] mb-8">Curated Pairings</h3>
             <p className="font-body-md text-[16px] text-on-surface-variant mb-10">Our curators recommend these fine art pieces to complement the deep tones of the Heritage Walnut Frame.</p>
             <div className="grid grid-cols-2 gap-8">
               
@@ -192,6 +192,18 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
             </div>
           </div>
+        </div>
+      </section>
+      {/* Boutique Newsletter Section (Inspired by Pic) */}
+      <section className="bg-secondary/5 py-20 px-6 text-center border-t border-secondary/10">
+        <div className="max-w-xl mx-auto">
+            <span className="material-symbols-outlined text-4xl text-secondary opacity-30 mb-6">mail</span>
+            <h2 className="font-display-lg text-[32px] md:text-[40px] mb-4">Stay in the Loop</h2>
+            <p className="text-on-surface-variant mb-8 font-body-md">Join our inner circle for exhibition previews and rare collection drops.</p>
+            <form className="flex max-w-md mx-auto border-b border-primary pb-2">
+                <input type="email" placeholder="Email Address" className="bg-transparent w-full focus:outline-none text-sm placeholder:text-neutral-400" />
+                <button type="submit" className="material-symbols-outlined text-primary">arrow_right_alt</button>
+            </form>
         </div>
       </section>
     </div>

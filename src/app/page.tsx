@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <header className="relative min-h-[90vh] md:min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-surface-container-lowest mt-24">
+      <header className="relative min-h-[90vh] md:min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-surface-container-lowest">
         <div className="absolute inset-0 z-0">
           <img 
             className="w-full h-full object-cover grayscale-[10%] opacity-95 transition-transform duration-[10000ms] hover:scale-105" 
