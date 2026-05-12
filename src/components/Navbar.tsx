@@ -4,9 +4,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { useCart } from '@/lib/store';
+
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
+  const items = useCart((state) => state.items);
+  const itemCount = items.reduce((acc, item) => acc + item.quantity, 0);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -42,16 +46,19 @@ export default function Navbar() {
               <Link href="/atelier" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Atelier</Link>
             </div>
 
-            <button className="hover:opacity-70 transition-opacity duration-300 flex items-center justify-center">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
-                <rect x="0.5" y="0.5" width="23" height="23" stroke="currentColor" strokeWidth="1"/>
-                <text x="50%" y="65%" textAnchor="middle" fontSize="10" fontWeight="bold" fill="currentColor" fontFamily="Noto Serif">GL</text>
-              </svg>
-            </button>
+            <Link href="/cart" className="relative hover:opacity-70 transition-opacity duration-300 flex items-center justify-center">
+              <span className="material-symbols-outlined text-[24px]">shopping_bag</span>
+              {itemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-surface text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
             
             <button className="hidden sm:block hover:opacity-70 transition-opacity duration-300">
               <span className="material-symbols-outlined text-[20px] md:text-[22px]">person</span>
             </button>
+
             
             <button 
               className="lg:hidden p-2 -mr-2 relative z-[160] flex flex-col justify-center items-center gap-1.5 w-10 h-10"

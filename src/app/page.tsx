@@ -1,10 +1,19 @@
 import Link from 'next/link';
+import prisma from '@/lib/db';
 
-export default function Home() {
+export default async function Home() {
+  const products = await prisma.product.findMany({
+    take: 6,
+    include: {
+      category: true,
+    },
+  });
+
   return (
     <>
       {/* Hero Section */}
       <header className="relative min-h-[90vh] md:min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-surface-container-lowest">
+        {/* ... hero section content ... */}
         <div className="absolute inset-0 z-0">
           <img 
             className="w-full h-full object-cover grayscale-[10%] opacity-95 transition-transform duration-[10000ms] hover:scale-105" 
@@ -140,65 +149,20 @@ export default function Home() {
           </div>
         </div>
         <div className="flex overflow-x-auto gap-6 md:gap-8 px-6 md:px-12 pb-12 no-scrollbar max-w-[1440px] mx-auto">
-          {/* Card 1 */}
-          <Link href="/product/1" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
-            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBzvNO2i_6hS3abi8lv9GeQsehtZfqsK66tNExpo2_hM-Iot1kgg48S3YnhoTb-R_1QM0h-fyJixRpE7-6KrjWdGv8Yv73n76l5ftWKvjbwbDFnp5uTCvW1uefjEQjv2llgkHP6KOphu_og5NjqAx53JTOVQ575jpI33qnONLWb4ZgTmxkuvXWfnAhAKUdVdYlRhxhWM4ZSPR6LlPDSABPDRMqjGH3arTeL3viEXHZnmedniabWh1muIfoK44rhTLUrOChnyKWT958" alt="Ethereal Form I" />
-            </div>
-            <h5 className="font-headline-sm text-lg mb-1">Ethereal Form I</h5>
-            <p className="font-body-md text-xs text-on-surface-variant mb-4">Limited Edition Print / Maple Frame</p>
-            <span className="font-label-caps text-[12px] tracking-widest">$450.00</span>
-          </Link>
-          
-          {/* Card 2 */}
-          <Link href="/product/2" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
-            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnTAXynGmkBygcA9jQ07iwsoB9MQAVxoGb-cUex5Kw1skArdETxjIeAnmQF_RG2lbwwAeYmyF5z-IGZeHLeOLv6LxOWaokv6Sc7zKWeUP__C2JsqFcRChtKUdKGgHlAAOw2ndeOgvwid6XAS7dbUEaUQiAFcz8T3zf3UX7dWbRu5M_3xfkmovCY2arBx_ElJiYQ_or1DW-6oGW1-KSMo_wBkSz9UPHiL_kpbFJTp28VE6nbDp1iZRaOUKE_ZgyCXUU197xHuY9WLqD" alt="Structural Study" />
-            </div>
-            <h5 className="font-headline-sm text-lg mb-1">Structural Study</h5>
-            <p className="font-body-md text-xs text-on-surface-variant mb-4">Original Ink on Paper / Metal Shell</p>
-            <span className="font-label-caps text-[12px] tracking-widest">$1,200.00</span>
-          </Link>
-
-          {/* Card 3 */}
-          <Link href="/product/3" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
-            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8zNU7P8w1Gijzfmn7oOAfs27AT6KbCB9AAkCToA1_7ruXNbUZ17z6pxWuAXKD5nfQL-0O1lADPdirocZUktFIBuGc9XJZ57PqiZwu5O_I1lx6uFsKN-rj4cu_5-a6CmXn9D51rhn5O64TE3SfOCZC2NwHzjNdAu7M_RXXk4E0uokhbEZpo26kyKtcWYty2RA2rApxEubBwbiufYEg4rSuTLgqrwizXi_gyr7T0GQB1pPkKGhDoir0VzUNPnLlOpjMglpz-L5GCQJ7" alt="Golden Hour" />
-            </div>
-            <h5 className="font-headline-sm text-lg mb-1">Golden Hour</h5>
-            <p className="font-body-md text-xs text-on-surface-variant mb-4">Mixed Media / Gilded Wood</p>
-            <span className="font-label-caps text-[12px] tracking-widest">$980.00</span>
-          </Link>
-
-          {/* Card 4 */}
-          <Link href="/product/4" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
-            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="/vintage_gold.png" alt="Vintage Gold Botanical" />
-            </div>
-            <h5 className="font-headline-sm text-lg mb-1">Vintage Gold Botanical</h5>
-            <p className="font-body-md text-xs text-on-surface-variant mb-4">Original Print / Ornate Gold</p>
-            <span className="font-label-caps text-[12px] tracking-widest">$450.00</span>
-          </Link>
-
-          {/* Card 5 */}
-          <Link href="/product/5" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
-            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="/modern_black.png" alt="Modern Architecture" />
-            </div>
-            <h5 className="font-headline-sm text-lg mb-1">Modern Architecture</h5>
-            <p className="font-body-md text-xs text-on-surface-variant mb-4">B&W Photography / Matte Metal</p>
-            <span className="font-label-caps text-[12px] tracking-widest">$210.00</span>
-          </Link>
-
-          {/* Card 6 */}
-          <Link href="/product/6" className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
-            <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
-              <img className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" src="/rustic_barnwood.png" alt="Serene Landscape" />
-            </div>
-            <h5 className="font-headline-sm text-lg mb-1">Serene Landscape</h5>
-            <p className="font-body-md text-xs text-on-surface-variant mb-4">Watercolor / Reclaimed Wood</p>
-            <span className="font-label-caps text-[12px] tracking-widest">$320.00</span>
-          </Link>
+          {products.map((product) => (
+            <Link key={product.id} href={`/product/${product.id}`} className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
+              <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
+                <img 
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                  src={product.image} 
+                  alt={product.name} 
+                />
+              </div>
+              <h5 className="font-headline-sm text-lg mb-1">{product.name}</h5>
+              <p className="font-body-md text-xs text-on-surface-variant mb-4">{product.type} / {product.frameType}</p>
+              <span className="font-label-caps text-[12px] tracking-widest">${product.price.toFixed(2)}</span>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -207,3 +171,4 @@ export default function Home() {
     </>
   );
 }
+
