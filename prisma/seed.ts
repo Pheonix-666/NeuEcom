@@ -28,6 +28,20 @@ async function main() {
     },
   });
 
+  const abstractHorizons = await prisma.collection.create({
+    data: {
+      name: 'Abstract Horizons',
+      description: 'Bold expressive works that push the boundaries of perception.',
+    },
+  });
+
+  const modernClassics = await prisma.collection.create({
+    data: {
+      name: 'Modern Classics',
+      description: 'Elegant, timeless designs for the contemporary home.',
+    },
+  });
+
   const products = [
     {
       name: 'Ethereal Form I',
@@ -65,6 +79,201 @@ async function main() {
       variants: [
         { material: 'Gilded Wood', size: '20x24', pricePaise: 98000, stockQty: 15, sku: 'GH-G2024' }
       ]
+    },
+    {
+      name: 'Midnight Forest',
+      slug: 'midnight-forest',
+      description: 'A moody, minimalist study of deep forest greens at night.',
+      mainImage: '/products/midnight-forest.png',
+      type: 'Limited Edition Canvas',
+      categoryId: catRustic.id,
+      collectionId: abstractHorizons.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Dark Walnut', size: '24x36', pricePaise: 185000, stockQty: 5, sku: 'MF-W2436' }
+      ]
+    },
+    {
+      name: 'Urban Reflection',
+      slug: 'urban-reflection',
+      description: 'Architectural precision meets fluid urban lighting.',
+      mainImage: '/products/urban-reflection.png',
+      type: 'Architectural Sketch',
+      categoryId: catIndustrial.id,
+      collectionId: modernClassics.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Brushed Steel', size: '18x24', pricePaise: 110000, stockQty: 8, sku: 'UR-S1824' }
+      ]
+    },
+    {
+      name: 'Velvet Whisper',
+      slug: 'velvet-whisper',
+      description: 'Soft textures and gold leaf accents in an elegant abstract composition.',
+      mainImage: '/products/velvet-whisper.png',
+      type: 'Gold Leaf Abstract',
+      categoryId: catOrnate.id,
+      collectionId: modernClassics.id,
+      isFeatured: true,
+      variants: [
+        { material: 'Antique Gold', size: '20x20', pricePaise: 145000, stockQty: 12, sku: 'VW-G2020' }
+      ]
+    },
+    {
+      name: 'Nordic Silence',
+      slug: 'nordic-silence',
+      description: 'A peaceful, minimalist landscape of the high North.',
+      mainImage: '/products/nordic-silence.png',
+      type: 'Fine Art Print',
+      categoryId: catMinimalist.id,
+      collectionId: heritageCollection.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Light Oak', size: '30x40', pricePaise: 220000, stockQty: 7, sku: 'NS-O3040' }
+      ]
+    },
+    {
+      name: 'Crimson Tide',
+      slug: 'crimson-tide',
+      description: 'An energetic burst of deep reds and charcoal sweeps.',
+      mainImage: '/products/crimson-tide.png',
+      type: 'Modern Abstract',
+      categoryId: catRustic.id,
+      collectionId: abstractHorizons.id,
+      isFeatured: true,
+      variants: [
+        { material: 'Natural Ash', size: '24x24', pricePaise: 135000, stockQty: 10, sku: 'CT-A2424' }
+      ]
+    },
+    {
+      name: 'Celestial Path',
+      slug: 'celestial-path',
+      description: 'A mystical exploration of cosmic nebulae and stardust.',
+      mainImage: '/products/celestial-path.png',
+      type: 'Mixed Media on Wood',
+      categoryId: catOrnate.id,
+      collectionId: abstractHorizons.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Gilded Maple', size: '16x20', pricePaise: 95000, stockQty: 15, sku: 'CP-M1620' }
+      ]
+    },
+    {
+      name: 'Sienna Sands',
+      slug: 'sienna-sands',
+      description: 'Warm desert dunes captured in rich ochre and sienna tones.',
+      mainImage: 'https://images.unsplash.com/photo-1505144808419-1957a94ca61e?q=80&w=1000&auto=format&fit=crop',
+      type: 'Textured Landscape',
+      categoryId: catRustic.id,
+      collectionId: heritageCollection.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Rustic Pine', size: '20x30', pricePaise: 88000, stockQty: 20, sku: 'SS-P2030' }
+      ]
+    },
+    {
+      name: 'Iron & Ivory',
+      slug: 'iron-ivory',
+      description: 'Geometric minimalism in a stark architectural contrast.',
+      mainImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop',
+      type: 'Geometric Abstract',
+      categoryId: catIndustrial.id,
+      collectionId: modernClassics.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Blackened Iron', size: '24x24', pricePaise: 125000, stockQty: 9, sku: 'II-I2424' }
+      ]
+    },
+    {
+      name: 'Royal Glimmer',
+      slug: 'royal-glimmer',
+      description: 'A regal composition of gold leaf and deep navy textures.',
+      mainImage: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=1000&auto=format&fit=crop',
+      type: 'Luxury Abstract',
+      categoryId: catOrnate.id,
+      collectionId: modernClassics.id,
+      isFeatured: true,
+      variants: [
+        { material: 'Polished Brass', size: '12x12', pricePaise: 75000, stockQty: 25, sku: 'RG-B1212' }
+      ]
+    },
+    {
+      name: 'Zen Garden',
+      slug: 'zen-garden',
+      description: 'Minimalist ink wash capturing the essence of tranquility.',
+      mainImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1000&auto=format&fit=crop',
+      type: 'Ink on Silk',
+      categoryId: catMinimalist.id,
+      collectionId: heritageCollection.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Bamboo', size: '18x36', pricePaise: 115000, stockQty: 6, sku: 'ZG-B1836' }
+      ]
+    },
+    {
+      name: 'Oceanic Depth',
+      slug: 'oceanic-depth',
+      description: 'Immersive teal and navy flows representing the deep sea.',
+      mainImage: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=1000&auto=format&fit=crop',
+      type: 'Fluid Acrylic',
+      categoryId: catRustic.id,
+      collectionId: abstractHorizons.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Driftwood', size: '36x48', pricePaise: 275000, stockQty: 3, sku: 'OD-D3648' }
+      ]
+    },
+    {
+      name: 'Marble Echo',
+      slug: 'marble-echo',
+      description: 'The timeless elegance of marble veins in a modern layout.',
+      mainImage: 'https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?q=80&w=1000&auto=format&fit=crop',
+      type: 'Digital Print on Metal',
+      categoryId: catIndustrial.id,
+      collectionId: modernClassics.id,
+      isFeatured: false,
+      variants: [
+        { material: 'White Aluminum', size: '20x20', pricePaise: 92000, stockQty: 18, sku: 'ME-A2020' }
+      ]
+    },
+    {
+      name: 'Amber Glow',
+      slug: 'amber-glow',
+      description: 'Warm lighting and wooden textures for a cozy atmosphere.',
+      mainImage: 'https://images.unsplash.com/photo-1502481851512-e9e2529bbbf9?q=80&w=1000&auto=format&fit=crop',
+      type: 'Atmospheric Photography',
+      categoryId: catRustic.id,
+      collectionId: heritageCollection.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Cherry Wood', size: '16x24', pricePaise: 105000, stockQty: 11, sku: 'AG-C1624' }
+      ]
+    },
+    {
+      name: 'Copper Rhythm',
+      slug: 'copper-rhythm',
+      description: 'Rhythmic patterns hammered into warm industrial copper.',
+      mainImage: 'https://images.unsplash.com/photo-1558444479-c86e10556b8c?q=80&w=1000&auto=format&fit=crop',
+      type: 'Metal Relief Art',
+      categoryId: catIndustrial.id,
+      collectionId: abstractHorizons.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Hammered Copper', size: '24x30', pricePaise: 165000, stockQty: 4, sku: 'CR-C2430' }
+      ]
+    },
+    {
+      name: 'Platinum Lace',
+      slug: 'platinum-lace',
+      description: 'Delicate lace patterns rendered in a shimmering platinum finish.',
+      mainImage: 'https://images.unsplash.com/photo-1515155075601-23009d0cb6d4?q=80&w=1000&auto=format&fit=crop',
+      type: 'Fine Ornate Pattern',
+      categoryId: catOrnate.id,
+      collectionId: modernClassics.id,
+      isFeatured: false,
+      variants: [
+        { material: 'Silver Leaf', size: '14x14', pricePaise: 82000, stockQty: 14, sku: 'PL-S1414' }
+      ]
     }
   ];
 
@@ -95,3 +304,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
