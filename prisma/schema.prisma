@@ -1,15 +1,26 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  passwordHash  String?
+  role          String    @default("customer") // customer, staff, admin
+  phone         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  orders        Order[]
+  inquiries     BespokeInquiry[]
 }
 
 model Category {
@@ -18,37 +29,88 @@ model Category {
   products Product[]
 }
 
-model Product {
-  id          String   @id @default(cuid())
+model Collection {
+  id          String    @id @default(cuid())
   name        String
-  description String
-  price       Float
-  image       String
-  type        String // e.g., "Limited Edition Print"
-  frameType   String // e.g., "Maple Frame"
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  OrderItems  OrderItem[]
+  description String?
+  products    Product[]
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  name          String
+  slug          String    @unique
+  description   String
+  mainImage     String?
+  type          String?   // e.g., "Limited Edition Print"
+  categoryId    String
+  category      Category  @relation(fields: [categoryId], references: [id])
+  collectionId  String?
+  collection    Collection? @relation(fields: [collectionId], references: [id])
+  isFeatured    Boolean   @default(false)
+  status        String    @default("active") // active, archived, draft
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  variants      ProductVariant[]
+}
+
+model ProductVariant {
+  id          String    @id @default(cuid())
+  productId   String
+  product     Product   @relation(fields: [productId], references: [id])
+  material    String?   // walnut, oak, maple, metal, gilded
+  size        String?   // 8x10, 11x14, etc.
+  pricePaise  Int       // integer in paise
+  stockQty    Int       @default(0)
+  sku         String    @unique
+  orderItems  OrderItem[]
 }
 
 model Order {
-  id        String      @id @default(cuid())
-  status    String      @default("PENDING") // PENDING, PAID, SHIPPED, DELIVERED
-  total     Float
-  email     String
-  items     OrderItem[]
-  createdAt DateTime    @default(now())
+  id               String      @id @default(cuid())
+  userId           String?
+  user             User?       @relation(fields: [userId], references: [id])
+  status           String      @default("pending") // pending, payment_received, confirmed, in_production, shipped, delivered, refunded
+  razorpayOrderId  String?
+  razorpayPaymentId String?
+  subtotalPaise    Int
+  gstPaise         Int
+  totalPaise       Int
+  shippingAddress  String?     // JSON string or structured
+  items            OrderItem[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 }
 
 model OrderItem {
-  id        String  @id @default(cuid())
-  orderId   String
-  order     Order   @relation(fields: [orderId], references: [id])
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
-  price     Float
+  id               String         @id @default(cuid())
+  orderId          String
+  order            Order          @relation(fields: [orderId], references: [id])
+  productVariantId String
+  variant          ProductVariant @relation(fields: [productVariantId], references: [id])
+  quantity         Int
+  pricePaise       Int            // Price at time of order
 }
 
+model BespokeInquiry {
+  id                 String    @id @default(cuid())
+  userId             String?
+  user               User?     @relation(fields: [userId], references: [id])
+  artworkType        String    // painting, photo, print, etc.
+  dimensionsCm       String    // {w: number, h: number}
+  materialPreference String?
+  notes              String?
+  photoUrl           String?
+  status             String    @default("submitted") // submitted, reviewing, quoted, quote_accepted, in_production, ready, delivered
+  quotePaise         Int?
+  assignedToId       String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  status    String   @default("subscribed")
+  createdAt DateTime @default(now())
+}

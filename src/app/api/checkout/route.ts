@@ -5,11 +5,12 @@ import { z } from 'zod';
 const checkoutSchema = z.object({
   email: z.string().email(),
   items: z.array(z.object({
-    id: z.string(),
+    variantId: z.string(),
+    productId: z.string(),
     quantity: z.number().min(1),
-    price: z.number(),
+    pricePaise: z.number(),
   })),
-  total: z.number(),
+  totalPaise: z.number(),
 });
 
 export async function POST(request: Request) {
@@ -19,14 +20,15 @@ export async function POST(request: Request) {
 
     const order = await prisma.order.create({
       data: {
-        email: validatedData.email,
-        total: validatedData.total,
-        status: 'PENDING',
+        subtotalPaise: validatedData.totalPaise,
+        gstPaise: Math.round(validatedData.totalPaise * 0.18), // 18% GST example
+        totalPaise: Math.round(validatedData.totalPaise * 1.18),
+        status: 'pending',
         items: {
           create: validatedData.items.map((item) => ({
-            productId: item.id,
+            productVariantId: item.variantId,
             quantity: item.quantity,
-            price: item.price,
+            pricePaise: item.pricePaise,
           })),
         },
       },
@@ -36,7 +38,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Checkout error:', error);
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Invalid data', details: error.errors }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid data', details: error.issues }, { status: 400 });
     }
     return NextResponse.json({ error: 'Failed to process checkout' }, { status: 500 });
   }

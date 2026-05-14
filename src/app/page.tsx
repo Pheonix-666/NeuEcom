@@ -3,9 +3,11 @@ import prisma from '@/lib/db';
 
 export default async function Home() {
   const products = await prisma.product.findMany({
+    where: { isFeatured: true, status: 'active' },
     take: 6,
     include: {
       category: true,
+      variants: true,
     },
   });
 
@@ -13,7 +15,6 @@ export default async function Home() {
     <>
       {/* Hero Section */}
       <header className="relative min-h-[90vh] md:min-h-[calc(100vh-6rem)] flex items-center overflow-hidden bg-surface-container-lowest">
-        {/* ... hero section content ... */}
         <div className="absolute inset-0 z-0">
           <img 
             className="w-full h-full object-cover grayscale-[10%] opacity-95 transition-transform duration-[10000ms] hover:scale-105" 
@@ -40,6 +41,7 @@ export default async function Home() {
           </div>
         </div>
       </header>
+
 
       {/* Curated Collections - Bento Grid Style */}
       <section className="mt-20 md:mt-[120px] max-w-[1440px] mx-auto px-6 md:px-12">
@@ -150,17 +152,17 @@ export default async function Home() {
         </div>
         <div className="flex overflow-x-auto gap-6 md:gap-8 px-6 md:px-12 pb-12 no-scrollbar max-w-[1440px] mx-auto">
           {products.map((product) => (
-            <Link key={product.id} href={`/product/${product.id}`} className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
+            <Link key={product.id} href={`/product/${product.slug}`} className="flex-shrink-0 w-80 bg-white p-6 frame-ghost-border group block">
               <div className="overflow-hidden mb-6 aspect-square bg-surface-container flex items-center justify-center">
                 <img 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                  src={product.image} 
+                  src={product.mainImage || ''} 
                   alt={product.name} 
                 />
               </div>
               <h5 className="font-headline-sm text-lg mb-1">{product.name}</h5>
-              <p className="font-body-md text-xs text-on-surface-variant mb-4">{product.type} / {product.frameType}</p>
-              <span className="font-label-caps text-[12px] tracking-widest">${product.price.toFixed(2)}</span>
+              <p className="font-body-md text-xs text-on-surface-variant mb-4">{product.type} / {product.variants[0]?.material}</p>
+              <span className="font-label-caps text-[12px] tracking-widest">₹{( (product.variants[0]?.pricePaise || 0) / 100).toLocaleString()}</span>
             </Link>
           ))}
         </div>

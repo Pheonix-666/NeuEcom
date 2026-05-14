@@ -11,9 +11,15 @@ export default async function CatalogPage({
   const categories = await prisma.category.findMany();
   
   const products = await prisma.product.findMany({
-    where: categoryId ? { categoryId } : {},
+    where: {
+      AND: [
+        { status: 'active' },
+        categoryId ? { categoryId } : {},
+      ],
+    },
     include: {
       category: true,
+      variants: true,
     },
   });
 
@@ -53,10 +59,10 @@ export default async function CatalogPage({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
         {products.map((product) => (
-          <Link key={product.id} href={`/product/${product.id}`} className="group block">
+          <Link key={product.id} href={`/product/${product.slug}`} className="group block">
             <div className="aspect-square bg-white p-6 ghost-border mb-6 overflow-hidden relative">
               <img 
-                src={product.image} 
+                src={product.mainImage || ''} 
                 alt={product.name} 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
               />
@@ -65,9 +71,9 @@ export default async function CatalogPage({
             <div className="space-y-1">
               <p className="font-label-caps text-[10px] text-secondary tracking-widest uppercase">{product.category.name}</p>
               <h3 className="font-headline-sm text-xl text-primary">{product.name}</h3>
-              <p className="font-body-sm text-on-surface-variant mb-4">{product.type} / {product.frameType}</p>
+              <p className="font-body-sm text-on-surface-variant mb-4">{product.type} / {product.variants[0]?.material}</p>
               <div className="pt-2 flex justify-between items-center border-t border-outline-variant/30">
-                <span className="font-label-caps text-sm tracking-widest">${product.price.toFixed(2)}</span>
+                <span className="font-label-caps text-sm tracking-widest">₹{((product.variants[0]?.pricePaise || 0) / 100).toLocaleString()}</span>
                 <span className="material-symbols-outlined text-primary opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
               </div>
             </div>

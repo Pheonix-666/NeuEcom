@@ -2,12 +2,14 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface CartItem {
-  id: string;
+  id: string; // variantId
+  productId: string;
   name: string;
-  price: number;
-  image: string;
+  pricePaise: number;
+  mainImage: string;
   quantity: number;
-  frameType: string;
+  material?: string;
+  size?: string;
 }
 
 interface CartState {
@@ -45,7 +47,7 @@ export const useCart = create<CartState>()(
       },
       clearCart: () => set({ items: [] }),
       total: () => {
-        return get().items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        return get().items.reduce((acc, item) => acc + item.pricePaise * item.quantity, 0);
       },
     }),
     {

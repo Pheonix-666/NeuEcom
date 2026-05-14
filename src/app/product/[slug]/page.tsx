@@ -3,13 +3,14 @@ import prisma from '@/lib/db';
 import { notFound } from 'next/navigation';
 import AddToCartButton from '@/components/AddToCartButton';
 
-export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   
   const product = await prisma.product.findUnique({
-    where: { id },
+    where: { slug },
     include: {
       category: true,
+      variants: true,
     },
   });
 
@@ -17,21 +18,28 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
+  const mainVariant = product.variants[0];
+
   // Fetch some related products
   const relatedProducts = await prisma.product.findMany({
     where: {
       categoryId: product.categoryId,
-      NOT: { id: product.id },
+      NOT: { slug: product.slug },
     },
     take: 2,
+    include: {
+      variants: true,
+    },
   });
 
   const cartItem = {
-    id: product.id,
+    id: mainVariant?.id || '',
+    productId: product.id,
     name: product.name,
-    price: product.price,
-    image: product.image,
-    frameType: product.frameType,
+    pricePaise: mainVariant?.pricePaise || 0,
+    mainImage: product.mainImage || '',
+    material: mainVariant?.material || '',
+    size: mainVariant?.size || '',
   };
 
   return (
@@ -42,7 +50,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
         <div className="lg:col-span-7 space-y-4 md:space-y-6">
           <div className="aspect-[1.33] w-full bg-white p-4 md:p-8 ghost-border relative overflow-hidden group">
             <img 
-                src={product.image} 
+                src={product.mainImage || ''} 
                 alt={product.name} 
                 className="w-full h-full object-cover shadow-sm" 
             />
@@ -50,14 +58,14 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           <div className="grid grid-cols-3 gap-4">
             <div className="aspect-square bg-white p-4 ghost-border hover:opacity-80 transition-opacity cursor-pointer">
               <img 
-                src={product.image} 
+                src={product.mainImage || ''} 
                 alt="Detail 1" 
                 className="w-full h-full object-cover" 
               />
             </div>
             <div className="aspect-square bg-white p-4 ghost-border hover:opacity-80 transition-opacity cursor-pointer">
               <img 
-                src={product.image} 
+                src={product.mainImage || ''} 
                 alt="Detail 2" 
                 className="w-full h-full object-cover opacity-50 grayscale" 
               />
@@ -73,7 +81,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           <div>
             <span className="font-label-caps text-[10px] md:text-[12px] tracking-widest text-secondary mb-2 block uppercase">EXCLUSIVELY HANDCRAFTED</span>
             <h1 className="font-display-lg text-[32px] md:text-[48px] text-primary mb-4 leading-tight">{product.name}</h1>
-            <p className="font-headline-sm text-[20px] md:text-[24px] text-on-surface-variant">${product.price.toFixed(2)}</p>
+            <p className="font-headline-sm text-[20px] md:text-[24px] text-on-surface-variant">₹{( (mainVariant?.pricePaise || 0) / 100).toLocaleString()}</p>
           </div>
 
           <div className="space-y-8">
@@ -81,7 +89,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             <div className="space-y-4">
               <label className="font-label-caps text-[12px] tracking-widest uppercase text-on-surface">Material Selection</label>
               <div className="flex gap-4">
-                <button className="px-6 py-3 border-2 border-primary text-primary font-label-caps text-[12px] tracking-widest bg-transparent">{product.frameType.split(' ')[0].toUpperCase()}</button>
+                <button className="px-6 py-3 border-2 border-primary text-primary font-label-caps text-[12px] tracking-widest bg-transparent">{mainVariant?.material?.toUpperCase() || 'WALNUT'}</button>
                 <button className="px-6 py-3 border border-outline-variant text-on-surface-variant font-label-caps text-[12px] tracking-widest hover:border-primary transition-colors">OAK</button>
                 <button className="px-6 py-3 border border-outline-variant text-on-surface-variant font-label-caps text-[12px] tracking-widest hover:border-primary transition-colors">MAPLE</button>
               </div>
@@ -147,7 +155,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
           <div className="relative group">
             <div className="absolute inset-0 border-[24px] border-white translate-x-6 translate-y-6 -z-10"></div>
             <img 
-                src={product.image} 
+                src={product.mainImage || ''} 
                 alt="Artisan Craftsmanship" 
                 className="w-full h-[600px] object-cover ghost-border" 
             />
@@ -177,7 +185,7 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
               <span className="material-symbols-outlined transition-transform">expand_more</span>
             </div>
             <div className="mt-4 text-on-surface-variant font-body-md text-[16px]">
-              Solid {product.frameType}. Acid-free conservation backing. Optically clear UV-protective acrylic or Museum Glass.
+              Solid {mainVariant?.material || 'Hardwood'}. Acid-free conservation backing. Optically clear UV-protective acrylic or Museum Glass.
             </div>
           </div>
           
@@ -200,15 +208,15 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
             <div className="grid grid-cols-2 gap-8">
               
               {relatedProducts.map((related) => (
-                <Link key={related.id} href={`/product/${related.id}`} className="group cursor-pointer block">
+                <Link key={related.id} href={`/product/${related.slug}`} className="group cursor-pointer block">
                   <div className="aspect-[0.8] bg-white p-4 mb-4 ghost-border overflow-hidden transition-all group-hover:scale-[1.02]">
                     <img 
-                      src={related.image} 
+                      src={related.mainImage || ''} 
                       alt={related.name} 
                       className="w-full h-full object-cover" 
                     />
                   </div>
-                  <p className="font-label-caps text-[10px] text-secondary">{related.type.toUpperCase()}</p>
+                  <p className="font-label-caps text-[10px] text-secondary">{related.type?.toUpperCase()}</p>
                   <h4 className="font-headline-sm text-lg">{related.name}</h4>
                 </Link>
               ))}

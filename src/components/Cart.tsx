@@ -23,8 +23,8 @@ export default function Cart() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email,
-          items: items.map(item => ({ id: item.id, quantity: item.quantity, price: item.price })),
-          total: total(),
+          items: items.map(item => ({ variantId: item.id, productId: item.productId, quantity: item.quantity, pricePaise: item.pricePaise })),
+          totalPaise: total(),
         }),
       });
 
@@ -77,13 +77,13 @@ export default function Cart() {
         {items.map((item) => (
           <div key={item.id} className="flex gap-4 items-start">
             <div className="w-20 h-20 bg-surface-container flex-shrink-0">
-              <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+              <img src={item.mainImage} alt={item.name} className="w-full h-full object-cover" />
             </div>
             <div className="flex-1">
               <h4 className="font-body-md text-sm font-medium">{item.name}</h4>
-              <p className="font-body-sm text-xs text-on-surface-variant mb-2">{item.frameType}</p>
+              <p className="font-body-sm text-xs text-on-surface-variant mb-2">{item.material} {item.size ? `| ${item.size}` : ''}</p>
               <div className="flex justify-between items-center">
-                <span className="font-label-caps text-xs">${item.price.toFixed(2)} x {item.quantity}</span>
+                <span className="font-label-caps text-xs">₹{(item.pricePaise / 100).toLocaleString()} x {item.quantity}</span>
                 <button 
                   onClick={() => removeItem(item.id)}
                   className="text-[10px] uppercase tracking-widest text-error hover:underline"
@@ -108,7 +108,7 @@ export default function Cart() {
         </div>
         <div className="flex justify-between items-center">
           <span className="font-label-caps text-xs tracking-widest uppercase">Subtotal</span>
-          <span className="font-headline-sm text-lg">${total().toFixed(2)}</span>
+          <span className="font-headline-sm text-lg">₹{(total() / 100).toLocaleString()}</span>
         </div>
         <button 
           onClick={handleCheckout}
