@@ -3,10 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { logout } from '@/lib/actions/auth';
 
 import { useCart } from '@/lib/store';
 
-export default function Navbar() {
+export default function Navbar({ user }: { user?: any }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const items = useCart((state) => state.items);
@@ -44,6 +45,9 @@ export default function Navbar() {
               <Link href="/bespoke" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Bespoke</Link>
               <Link href="/services" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Services</Link>
               <Link href="/atelier" className="text-[11px] font-label-caps uppercase tracking-widest text-neutral-500 hover:text-neutral-900 transition-colors">Atelier</Link>
+              {user?.role === 'admin' && (
+                <Link href="/admin" className="text-[11px] font-label-caps uppercase tracking-widest text-secondary font-bold hover:opacity-70 transition-colors border-l border-neutral-200 pl-8">Admin</Link>
+              )}
             </div>
 
             <Link href="/cart" className="relative hover:opacity-70 transition-opacity duration-300 flex items-center justify-center">
@@ -55,9 +59,23 @@ export default function Navbar() {
               )}
             </Link>
             
-            <button className="hidden sm:block hover:opacity-70 transition-opacity duration-300">
-              <span className="material-symbols-outlined text-[20px] md:text-[22px]">person</span>
-            </button>
+            <div className="hidden sm:flex items-center gap-4">
+              {user ? (
+                <div className="flex items-center gap-4">
+                  <span className="text-[10px] font-label-caps tracking-widest uppercase text-neutral-500">{user.name || 'Member'}</span>
+                  <button 
+                    onClick={() => logout()}
+                    className="material-symbols-outlined text-[20px] md:text-[22px] text-neutral-400 hover:text-primary transition-colors"
+                  >
+                    logout
+                  </button>
+                </div>
+              ) : (
+                <Link href="/auth/login" className="hover:opacity-70 transition-opacity duration-300">
+                  <span className="material-symbols-outlined text-[20px] md:text-[22px]">person</span>
+                </Link>
+              )}
+            </div>
 
             
             <button 
@@ -94,6 +112,9 @@ export default function Navbar() {
             <Link href="/bespoke" className="text-3xl font-display-lg text-primary hover:italic transition-all" onClick={() => setIsMenuOpen(false)}>Bespoke</Link>
             <Link href="/services" className="text-3xl font-display-lg text-primary hover:italic transition-all" onClick={() => setIsMenuOpen(false)}>Services</Link>
             <Link href="/atelier" className="text-3xl font-display-lg text-primary hover:italic transition-all" onClick={() => setIsMenuOpen(false)}>Atelier</Link>
+            {user?.role === 'admin' && (
+              <Link href="/admin" className="text-3xl font-display-lg text-secondary italic font-bold transition-all" onClick={() => setIsMenuOpen(false)}>Admin Portal</Link>
+            )}
           </div>
           
           <div className="mt-auto space-y-10 pt-10 border-t border-neutral-100">
@@ -111,9 +132,25 @@ export default function Navbar() {
               </div>
             </div>
             
-            <button className="w-full bg-primary text-white py-4 font-label-caps text-[11px] tracking-widest uppercase">
-              Account Login
-            </button>
+            {user ? (
+              <div className="space-y-4">
+                <p className="font-label-caps text-[10px] tracking-widest uppercase text-center text-on-surface-variant">Welcome, {user.name}</p>
+                <button 
+                  onClick={() => { logout(); setIsMenuOpen(false); }}
+                  className="w-full border border-primary text-primary py-4 font-label-caps text-[11px] tracking-widest uppercase hover:bg-surface-container transition-all"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <Link 
+                href="/auth/login" 
+                onClick={() => setIsMenuOpen(false)}
+                className="w-full bg-primary text-white py-4 font-label-caps text-[11px] tracking-widest uppercase text-center block"
+              >
+                Account Login
+              </Link>
+            )}
           </div>
         </div>
       </aside>

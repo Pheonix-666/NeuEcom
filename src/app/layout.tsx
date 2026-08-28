@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Good Luck Frame and Art | Artisanal Framing & Fine Art",
@@ -16,11 +14,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="antialiased flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow pt-20 md:pt-24">
+        <main className="flex-grow">
           {children}
         </main>
-        <Footer />
       </body>
     </html>
   );
